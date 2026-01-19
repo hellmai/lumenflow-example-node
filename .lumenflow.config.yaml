@@ -1,0 +1,53 @@
+# LumenFlow Configuration for Node.js/TypeScript Projects
+# Documentation: https://lumenflow.dev/reference/config
+
+version: "1.0"
+
+# Project identification
+project:
+  name: "example-node-project"
+  description: "Example Node.js/TypeScript project demonstrating LumenFlow workflow"
+
+# Delivery lanes configuration
+lanes:
+  - name: Core
+    scope: "src/**"
+  - name: Tests
+    scope: "tests/**"
+  - name: Documentation
+    scope: "docs/**"
+
+# Quality gates configuration
+gates:
+  preset: "node-typescript"
+  
+  # Format check (Prettier)
+  format:
+    enabled: true
+    command: "pnpm prettier --check ."
+    fix_command: "pnpm prettier --write ."
+  
+  # Linting (ESLint)
+  lint:
+    enabled: true
+    command: "pnpm eslint ."
+    fix_command: "pnpm eslint . --fix"
+  
+  # Type checking (TypeScript)
+  typecheck:
+    enabled: true
+    command: "pnpm tsc --noEmit"
+  
+  # Tests (Vitest)
+  test:
+    enabled: true
+    command: "pnpm vitest run"
+    coverage:
+      enabled: true
+      threshold: 80
+
+# WU (Work Unit) settings
+wu:
+  spec_dir: "docs/04-operations/tasks/wu"
+  status_file: "docs/04-operations/tasks/status.md"
+  stamps_dir: ".beacon/stamps"
